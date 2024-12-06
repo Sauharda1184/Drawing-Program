@@ -4,7 +4,6 @@ import java.util.*;
 import javax.swing.*;
 
 class View extends JFrame {
-  private UIContext uiContext;
   private final JPanel drawingPanel;
   private final JPanel buttonPanel;
   private final JButton lineButton;

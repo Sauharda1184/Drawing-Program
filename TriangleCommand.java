@@ -1,6 +1,4 @@
-
 import java.awt.*;
-import java.text.*;
 
 public class TriangleCommand extends Command {
 

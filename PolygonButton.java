@@ -20,6 +20,7 @@ public class PolygonButton extends JButton implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         view.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
         drawingPanel.addMouseListener(mouseHandler);
+        drawingPanel.addMouseMotionListener(mouseHandler);
     }
 
     private class MouseHandler extends MouseAdapter {
@@ -34,19 +35,22 @@ public class PolygonButton extends JButton implements ActionListener {
                 
                 polygonCommand.addPoint(View.mapPoint(e.getPoint()));
                 
-                if (polygonCommand.end()) {
-                    polygonCommand.execute();
-                    undoManager.endCommand(polygonCommand);
-                    polygonCommand = null;
-                }
             } else if (SwingUtilities.isRightMouseButton(e)) {
                 if (polygonCommand != null && polygonCommand.end()) {
                     polygonCommand.execute();
                     undoManager.endCommand(polygonCommand);
-                    polygonCommand = null;
+                    
                     drawingPanel.removeMouseListener(this);
+                    drawingPanel.removeMouseMotionListener(this);
                     view.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    polygonCommand = null;
                 }
+            }
+        }
+
+        public void mouseMoved(MouseEvent e) {
+            if (polygonCommand != null) {
+                view.refresh();
             }
         }
     }

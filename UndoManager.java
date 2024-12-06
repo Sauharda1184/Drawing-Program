@@ -2,13 +2,13 @@ import java.util.*;
 
 public class UndoManager {
   private static Model model;
-  private Stack history;
-  private Stack redoStack;
+  private final Stack<Command> history;
+  private final Stack<Command> redoStack;
   private Command currentCommand;
 
   public UndoManager() {
-    history = new Stack();
-    redoStack = new Stack();
+    history = new Stack<>();
+    redoStack = new Stack<>();
   }
 
   public static void setModel(Model model) {
@@ -45,7 +45,7 @@ public class UndoManager {
 
   public void undo() {
     if (!(history.empty())) {
-      Command command = (Command) (history.peek());
+      Command command = history.peek();
       if (command.undo()) {
         history.pop();
         redoStack.push(command);
@@ -61,7 +61,7 @@ public class UndoManager {
 
   public void redo() {
     if (!(redoStack.empty())) {
-      Command command = (Command) (redoStack.peek());
+      Command command = redoStack.peek();
       if (command.redo()) {
         redoStack.pop();
         history.push(command);
