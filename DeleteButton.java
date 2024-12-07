@@ -1,5 +1,6 @@
-import javax.swing.*;
+/*DeleteButton */
 import java.awt.event.*;
+import javax.swing.*;
 public class DeleteButton  extends JButton implements ActionListener {
   private DeleteCommand deleteCommand;
   private UndoManager undoManager;
